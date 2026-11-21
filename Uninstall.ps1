@@ -35,5 +35,18 @@ try {
         }
 } catch {}
 
+# Remove the stable install folder (the copy Install.ps1 made in %LOCALAPPDATA%),
+# so nothing is left behind. This is separate from wherever you ran this
+# uninstaller from, which is never touched.
+$InstallDir = Join-Path $env:LOCALAPPDATA 'BatteryMonitor'
+if (Test-Path $InstallDir) {
+    try {
+        Remove-Item $InstallDir -Recurse -Force -ErrorAction Stop
+        Write-Host "Removed installed files from $InstallDir." -ForegroundColor Green
+    } catch {
+        Write-Host "Could not remove $InstallDir (it may still contain a log file in use)." -ForegroundColor Yellow
+    }
+}
+
 Write-Host ""
 Write-Host "BatteryMonitor will not start again. Done. You can close this window."
