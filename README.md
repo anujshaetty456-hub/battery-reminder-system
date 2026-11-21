@@ -8,21 +8,54 @@ on their own schedule until you fix the problem, then stop automatically.
 No internet, no accounts, no admin rights, no third-party installs. Runs
 entirely on built-in Windows PowerShell and WMI.
 
-## Install (one command)
+## Install — one command, nothing to download first
 
-Clone the repo, then run this from inside it:
+Open PowerShell and paste this:
 
 ```powershell
+irm https://raw.githubusercontent.com/anujshaetty456-hub/battery-reminder-system/main/bootstrap.ps1 | iex
+```
+
+That's it. This one line downloads everything, installs it, and starts
+protecting your battery immediately — no git, no manual download, no
+unzipping. You don't need to clone this repo first.
+
+What it does:
+- Downloads this repo, installs `BatteryMonitor.ps1` into a permanent folder on your PC.
+- Registers it to start automatically, hidden, every time you log in (via your Windows Startup folder — no admin rights needed).
+- Starts it immediately.
+- Cleans up the temporary download files afterward.
+
+### Alternative: clone it yourself
+
+If you'd rather see the code first:
+
+```powershell
+git clone https://github.com/anujshaetty456-hub/battery-reminder-system.git
+cd battery-reminder-system
 powershell -ExecutionPolicy Bypass -File .\Install.ps1
 ```
 
-That's the whole setup. It:
-- Registers `BatteryMonitor.ps1` to start automatically, hidden, every time you log in (via your Windows Startup folder — no admin rights needed).
-- Starts it immediately, so it's already protecting your battery.
+Or just double-click `Install.bat` after cloning.
 
-Or just double-click `Install.bat` instead of running the command above.
+### Is the one-line install safe?
+
+`irm ... | iex` downloads and runs a script directly, so you should only
+do this for scripts you trust. This repo is fully open source — read
+[`bootstrap.ps1`](bootstrap.ps1) and [`Install.ps1`](Install.ps1) yourself
+before running them if you want to verify exactly what they do. Neither
+one sends anything over the network, asks for admin rights, or touches
+anything outside this app's own folder.
 
 ## Uninstall
+
+One line, no clone needed:
+
+```powershell
+irm https://raw.githubusercontent.com/anujshaetty456-hub/battery-reminder-system/main/Uninstall.ps1 | iex
+```
+
+Or, if you cloned the repo:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\Uninstall.ps1
@@ -51,8 +84,9 @@ Save, then re-run `Install.ps1` (or restart your PC) for changes to take effect.
 
 | File | Purpose |
 |---|---|
+| `bootstrap.ps1` | What the one-line `irm \| iex` command runs — downloads the repo and installs it, no clone needed |
 | `BatteryMonitor.ps1` | The monitor itself — polls battery state, fires alerts, logs activity, self-restarts on crash |
-| `Install.ps1` / `Install.bat` | One-command installer — registers autostart and starts the monitor |
+| `Install.ps1` / `Install.bat` | Installer used after cloning — registers autostart and starts the monitor |
 | `Uninstall.ps1` / `Uninstall.bat` | One-command uninstaller |
 | `READ ME - Battery Alerts.txt` | Plain-English guide for non-technical use |
 | `docs/TEST-REPORT.md` | Full test report: what was tested, how, and the result |
