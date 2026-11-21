@@ -1,0 +1,37 @@
+BATTERY ALERTS - HOW TO USE
+============================
+
+1. INSTALL: Double-click "Install.bat". A black window will flash and say
+   "Done" - that's it, it's installed and already running.
+
+2. HOW TO KNOW IT'S RUNNING: Look at the clock in the bottom-right corner
+   of your screen. Click the little up-arrow (^) to show hidden icons -
+   if you don't see anything, that's normal, it runs invisibly. You'll
+   know it's working the moment you get your first alert.
+
+3. WHAT YOU'LL SEE: A small pop-up message near your clock, with a sound,
+   when your battery is FULL (unplug it), around 30% (plug in soon), or
+   15% or below (plug in NOW). ALL THREE keep repeating - not just once -
+   for as long as the problem isn't fixed:
+     - FULL repeats every 2 minutes until you unplug the charger.
+     - 30% repeats every 5 minutes until you plug in.
+     - LOW (15% or below) repeats every 2 minutes until you plug in.
+   Each one stops on its own the moment you fix it (unplug for FULL,
+   plug in for 30%/LOW).
+
+4. CHANGE THE ALERT LEVELS: Open "BatteryMonitor.ps1" with Notepad
+   (right-click it > Open with > Notepad). Near the top you'll see:
+       $FullThreshold = 95
+       $MidThreshold  = 30
+       $LowThreshold  = 15
+       $FullRepeatSec = 120   (how often FULL repeats, in seconds)
+       $MidRepeatSec  = 300   (how often 30% repeats, in seconds)
+       $LowRepeatSec  = 120   (how often LOW repeats, in seconds)
+   Change any number, save the file (Ctrl+S), then restart your PC
+   (or double-click Install.bat again) for the new numbers to take effect.
+
+5. REMOVE IT: Double-click "Uninstall.bat". It stops permanently and
+   won't start again. Double-click "Install.bat" any time to bring it back.
+
+No admin password or special permission is needed for any of this.
+Nothing here uses the internet - it works with WiFi fully off.
