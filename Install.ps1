@@ -45,6 +45,15 @@ if (-not (Test-Path $ShortcutPath)) {
 
 Write-Host ""
 Write-Host "Installed. BatteryMonitor will start automatically every time you log in." -ForegroundColor Green
+
+# Stop any already-running copy first, so re-installing never leaves two instances
+# running at once (which would double every popup and sound).
+try {
+    Get-CimInstance Win32_Process -Filter "Name='powershell.exe'" -ErrorAction SilentlyContinue |
+        Where-Object { $_.CommandLine -like '*BatteryMonitor.ps1*' } |
+        ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
+} catch {}
+
 Write-Host "Starting it now so it's already protecting your battery..."
 
 try {
